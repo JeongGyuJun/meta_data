@@ -3,23 +3,32 @@ import json
 import sys
 sys.path.append('../../METADATA')
 import METADATA
-# 궁금증 
+# 궁금증
+# 파일 http가 아닌 파일 형식으로 여는 것 (Pro 1과 다른 점은 이 부분이다.)
+# with open('193px-Classroom.jpeg', 'rb') as f:# 이부분은 파일 형식으로
+#     image_data = f.read() # 열어야하기 때문에 추가한다.
+
+
+
 params = {  #또 다른 정보
     'visualFeatures': 'Description',
     'langage': 'en'
-    
+
          }
 headers = { #우리가 보내는 데이터 타입
-    'Content-Type': 'application/json',
-    'Ocp-Apim-Subscription-Key': METADATA.VISION_KEY # 메타 데이터엣 있는 것을 임포트 하여 사용함 
+    'Content-Type': 'application/octet-stream',
+    'Ocp-Apim-Subscription-Key': METADATA.VISION_KEY # 메타 데이터엣 있는 것을 임포트 하여 사용함
 }
 
-data = {    #사진 자료
-    'url':'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/1920px-Instagram_logo_2016.svg.png'
+
+data = {
+    'url': 'https://projectimage.blob.core.windows.net/ratice/firstEx.jpeg'
+
 }
 
 res = requests.post('https://koreacentral.api.cognitive.microsoft.com/vision/v1.0/analyze',
-                        params=params, headers=headers, json=data)
+                        params=params, headers=headers, data=data)
+#  json이 아닌 data로 바꿘준다.
 
 
 #여기까지해서 requests하면 통신을 해서 값을 받아올 수 있다.
@@ -39,7 +48,7 @@ params = {  #또 다른 정보
 
 headers = { #우리가 보내는 데이터 타입
     'Content-Type': 'application/json',
-    'Ocp-Apim-Subscription-Key': METADATA.TRANSLATE_KEY # 메타 데이터엣 있는 것을 임포트 하여 사용함 
+    'Ocp-Apim-Subscription-Key': METADATA.TRANSLATE_KEY # 메타 데이터엣 있는 것을 임포트 하여 사용함
 }
 
 data = [{    #사진 자료
